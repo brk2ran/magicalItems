@@ -1,20 +1,10 @@
 const express = require('express');
-const cors = require('cors');
-const itemsRoutes = require('./routes/itemsRoutes'); // Importiere die Items-Routen
-require('./config/database'); // Verbindung zur Datenbank
-
 const app = express();
+const itemsRouter = require('./routes/items'); // Importiere die Items-Route
 
-// Middleware
-app.use(cors());
-app.use(express.json());
+app.use(express.json()); // Middleware für JSON-Parsing
+app.use('/api/items', itemsRouter); // Registriere die Route unter /api/items
 
-// API-Routen
-app.use('/api/items', itemsRoutes); // Binde die Items-Routen ein
-
-const PORT = process.env.PORT || 3000;
-app.listen(PORT, () => {
-    console.log(`Server läuft auf http://localhost:${PORT}`);
+app.listen(3000, () => {
+    console.log('Server läuft auf http://localhost:3000');
 });
-
-module.exports = app;

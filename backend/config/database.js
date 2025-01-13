@@ -1,18 +1,16 @@
-// config/database.js
 const { Pool } = require('pg');
-require('dotenv').config(); // Um Umgebungsvariablen aus .env zu laden
+require('dotenv').config();
 
 const pool = new Pool({
-    connectionString: process.env.DATABASE_URL, // Verbindung aus der .env-Datei
-    ssl: process.env.NODE_ENV === 'production' ? { rejectUnauthorized: false } : false // SSL für Produktionsumgebung
+    connectionString: process.env.DATABASE_URL,
 });
 
-pool.on('connect', () => {
-    console.log('Datenbank verbunden!');
-});
-
-pool.on('error', (err) => {
-    console.error('Datenbankverbindungsfehler:', err.message);
+pool.connect((err) => {
+    if (err) {
+        console.error('Fehler bei der Datenbankverbindung:', err.message);
+    } else {
+        console.log('Datenbankverbindung erfolgreich!');
+    }
 });
 
 module.exports = pool;
