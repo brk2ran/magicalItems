@@ -92,4 +92,131 @@ router.delete('/:id', async (req, res) => {
     }
 });
 
+// Kombinierte Daten aus Items und Kategorien abrufen
+router.get('/details', async (req, res) => {
+    const { category } = req.query; // Kategorie-Filter aus der Query-URL
+    let query = `
+        SELECT 
+            items.id AS item_id,
+            items.name AS item_name,
+            items.price,
+            items.mana,
+            categories.name AS category_name
+        FROM 
+            items
+        JOIN 
+            categories
+        ON 
+            items.category_id = categories.id
+    `;
+    const params = [];
+    if (category) {
+        query += ` WHERE categories.name = $1`;
+        params.push(category);
+    }
+    try {
+        const result = await pool.query(query, params);
+        res.json(result.rows);
+    } catch (err) {
+        console.error(err.message);
+        res.status(500).send('Serverfehler');
+    }
+});
+
+// Kategorie und zugehörige Items löschen
+router.delete('/:id', async (req, res) => {
+    const { id } = req.params;
+
+    try {
+        // Zuerst alle zugeordneten Items löschen
+        await pool.query('DELETE FROM items WHERE category_id = $1', [id]);
+
+        // Kategorie löschen
+        const result = await pool.query('DELETE FROM categories WHERE id = $1 RETURNING *', [id]);
+        if (result.rows.length === 0) {
+            return res.status(404).send('Kategorie nicht gefunden');
+        }
+
+        res.json({ message: 'Kategorie und zugehörige Items erfolgreich gelöscht', category: result.rows[0] });
+    } catch (err) {
+        console.error('Fehler beim Löschen der Kategorie:', err.message);
+        res.status(500).send('Serverfehler');
+    }
+});
+
+
+
+// Suche, Filter und Sortierung für Items
+router.get('/search', async (req, res) => {
+    const { q, price_min, price_max, mana_min, mana_max, sort_by, order } = req.query;
+    const params = [];
+    let query = `
+        SELECT 
+            items.id AS item_id,
+            items.name AS item_name,
+            items.price,
+            items.mana,
+            categories.name AS category_name
+        FROM 
+            items
+        JOIN 
+            categories
+        ON 
+            items.category_id = categories.id
+    `;
+
+    // Bedingungen hinzufügen
+    const conditions = [];
+    try {
+        if (q) {
+            conditions.push(`(items.name ILIKE $${params.length + 1} OR categories.name ILIKE $${params.length + 1})`);
+            params.push(`%${q}%`);
+        }
+        if (price_min) {
+            if (isNaN(price_min)) throw new Error('price_min muss eine Zahl sein');
+            conditions.push(`items.price >= $${params.length + 1}`);
+            params.push(Number(price_min));
+        }
+        if (price_max) {
+            if (isNaN(price_max)) throw new Error('price_max muss eine Zahl sein');
+            conditions.push(`items.price <= $${params.length + 1}`);
+            params.push(Number(price_max));
+        }
+        if (mana_min) {
+            if (isNaN(mana_min)) throw new Error('mana_min muss eine Zahl sein');
+            conditions.push(`items.mana >= $${params.length + 1}`);
+            params.push(Number(mana_min));
+        }
+        if (mana_max) {
+            if (isNaN(mana_max)) throw new Error('mana_max muss eine Zahl sein');
+            conditions.push(`items.mana <= $${params.length + 1}`);
+            params.push(Number(mana_max));
+        }
+
+        // Bedingungen an die Query anhängen
+        if (conditions.length > 0) {
+            query += ` WHERE ${conditions.join(' AND ')}`;
+        }
+
+        // Sortierung hinzufügen
+        const validSortColumns = ['price', 'mana', 'item_name']; // Erlaubte Spalten
+        if (sort_by && validSortColumns.includes(sort_by)) {
+            const sortOrder = order === 'desc' ? 'DESC' : 'ASC';
+            query += ` ORDER BY ${sort_by} ${sortOrder}`;
+        } else {
+            query += ` ORDER BY items.name ASC`; // Standard-Sortierung
+        }
+
+        // Query ausführen
+        const result = await pool.query(query, params);
+        res.json(result.rows);
+    } catch (err) {
+        console.error('Fehler bei der Anfrage:', err.message);
+        res.status(400).json({ error: err.message }); // Rückgabe eines klaren Fehlers
+    }
+});
+
+
+
+
 module.exports = router;
