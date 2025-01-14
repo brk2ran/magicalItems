@@ -1,16 +1,19 @@
 <header>
+    <h1>Magische Items</h1>
     <nav>
-        <div class="logo">
-            <a href="/pages/index.html">Magische Items</a>
-        </div>
-        <ul class="nav-links">
-            <li><a href="/pages/index.html">Home</a></li>
-            <li><a href="/pages/kontakt.html">Kontakt</a></li>
-            <li><a href="/pages/impressum.html">Impressum</a></li>
+        <ul>
+            <li><a href="../pages/index.html" class="active">HOME</a></li>
+            <li><a href="../pages/waffen.html">WAFFEN</a></li>
+            <li><a href="../pages/tränke.html">TRÄNKE</a></li>
+            <li><a href="../pages/rüstungen.html">RÜSTUNGEN</a></li>
+            <li><a href="../pages/kontakt.html">KONTAKT</a></li>
+            <li><a href="../pages/impressum.html">IMPRESSUM</a></li>
         </ul>
-        <form class="search-form" id="searchForm">
-            <input type="text" id="searchInput" placeholder="Suche nach Items..." />
-            <button type="submit">Suchen</button>
-        </form>
     </nav>
+    <div class="search-container">
+        <input type="text" placeholder="Suche nach Items..." id="searchInput" />
+        <input type="number" placeholder="min €" id="minPrice" />
+        <input type="number" placeholder="max €" id="maxPrice" />
+        <button id="searchButton">Suchen</button>
+    </div>
 </header>

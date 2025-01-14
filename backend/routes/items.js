@@ -22,6 +22,7 @@ router.post(
         body('price').isFloat({ min: 0 }).withMessage('Preis muss positiv sein'),
         body('mana').isInt({ min: 0 }).withMessage('Mana muss positiv sein'),
         body('category_id').isInt().withMessage('Kategorie-ID muss eine Zahl sein'),
+        body('image').optional().isString().withMessage('Bildpfad muss ein String sein'),
     ],
     async (req, res) => {
         const errors = validationResult(req);
@@ -29,11 +30,11 @@ router.post(
             return res.status(400).json({ errors: errors.array() });
         }
 
-        const { name, price, mana, category_id } = req.body;
+        const { name, price, mana, category_id, image } = req.body;
         try {
             const result = await pool.query(
-                'INSERT INTO items (name, price, mana, category_id) VALUES ($1, $2, $3, $4) RETURNING *',
-                [name, price, mana, category_id]
+                'INSERT INTO items (name, price, mana, category_id, image) VALUES ($1, $2, $3, $4, $5) RETURNING *',
+                [name, price, mana, category_id, image || null]
             );
             res.status(201).json(result.rows[0]);
         } catch (err) {
@@ -51,10 +52,11 @@ router.put(
         body('price').isFloat({ min: 0 }).withMessage('Preis muss positiv sein'),
         body('mana').isInt({ min: 0 }).withMessage('Mana muss positiv sein'),
         body('category_id').isInt().withMessage('Kategorie-ID muss eine Zahl sein'),
+        body('image').optional().isString().withMessage('Bildpfad muss ein String sein'),
     ],
     async (req, res) => {
         const { id } = req.params;
-        const { name, price, mana, category_id } = req.body;
+        const { name, price, mana, category_id, image } = req.body;
 
         const errors = validationResult(req);
         if (!errors.isEmpty()) {
@@ -63,8 +65,8 @@ router.put(
 
         try {
             const result = await pool.query(
-                'UPDATE items SET name = $1, price = $2, mana = $3, category_id = $4 WHERE id = $5 RETURNING *',
-                [name, price, mana, category_id, id]
+                'UPDATE items SET name = $1, price = $2, mana = $3, category_id = $4, image = $5 WHERE id = $6 RETURNING *',
+                [name, price, mana, category_id, image || null, id]
             );
             if (result.rows.length === 0) {
                 return res.status(404).send('Item nicht gefunden');
@@ -76,6 +78,7 @@ router.put(
         }
     }
 );
+
 
 // Item löschen
 router.delete('/:id', async (req, res) => {
@@ -213,6 +216,21 @@ router.get('/search', async (req, res) => {
     } catch (err) {
         console.error('Fehler bei der Anfrage:', err.message);
         res.status(400).json({ error: err.message }); // Rückgabe eines klaren Fehlers
+    }
+});
+
+// GET-Route für ein einzelnes Item basierend auf der ID
+router.get('/:id', async (req, res) => {
+    const { id } = req.params;
+    try {
+        const { rows } = await pool.query('SELECT * FROM items WHERE id = $1', [id]);
+        if (rows.length === 0) {
+            return res.status(404).json({ error: 'Item nicht gefunden' });
+        }
+        res.json(rows[0]);
+    } catch (error) {
+        console.error('Fehler beim Abrufen des Items:', error);
+        res.status(500).json({ error: 'Serverfehler' });
     }
 });
 

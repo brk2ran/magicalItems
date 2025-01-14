@@ -1,116 +1,154 @@
 /* Header */
 header {
-    background-color: #1a1a1a;
-    color: #fff;
-    padding: 10px 20px;
-}
-
-header nav {
+    background-color: #333;
+    color: white;
+    padding: 20px;
     display: flex;
+    align-items: center;
     justify-content: space-between;
-    align-items: center;
 }
 
-header .logo a {
-    text-decoration: none;
-    color: #fff;
-    font-size: 1.5rem;
-    font-weight: bold;
+header h1 {
+    font-family: 'Cinzel Decorative', serif;
+    font-size: 2.5rem;
+    margin: 0;
 }
 
-header .nav-links {
-    list-style: none;
+nav {
+    flex-grow: 1;
     display: flex;
-    gap: 15px;
+    justify-content: center;
 }
 
-header .nav-links a {
-    text-decoration: none;
-    color: #fff;
-    font-size: 1rem;
-}
-
-header .search-form {
-    display: flex;
-    align-items: center;
-}
-
-header .search-form input {
-    padding: 5px;
-    font-size: 1rem;
-    border: none;
-    border-radius: 4px;
-}
-
-header .search-form button {
-    padding: 5px 10px;
-    margin-left: 5px;
-    background-color: #f4a261;
-    border: none;
-    color: #fff;
-    border-radius: 4px;
-    cursor: pointer;
-}
-
-/* Footer */
-footer {
-    background-color: #1a1a1a;
-    color: #fff;
-    text-align: center;
-    padding: 20px 0;
-}
-
-footer .footer-links {
+nav ul {
     list-style: none;
     padding: 0;
-    margin: 10px 0 0;
+    display: flex;
+    gap: 20px;
 }
 
-footer .footer-links a {
+nav ul li a {
+    color: white;
     text-decoration: none;
-    color: #f4a261;
+    font-size: 1.2rem;
+    padding: 5px 15px;
+    border-radius: 5px;
+    transition: background-color 0.3s ease;
+}
+
+nav ul li a:hover,
+nav ul li a.active {
+    background-color: #555;
+}
+
+/* Suchleiste */
+.search-container {
+    display: flex;
+    gap: 10px;
+}
+
+.search-container input[type="text"],
+.search-container input[type="number"] {
+    padding: 5px 10px;
+    font-size: 1rem;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+}
+
+.search-container button {
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    padding: 5px 15px;
+    border-radius: 5px;
+    cursor: pointer;
     font-size: 1rem;
 }
 
-/* Container für die Items */
-.items-container {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-    gap: 20px;
-    padding: 20px;
+.search-container button:hover {
+    background-color: #45a049;
 }
 
-/* Einzelne Item-Karten */
+/* Main Content */
+main {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+    background-color: #f5f5f5;
+}
+
+.items-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 20px;
+}
+
 .item-card {
-    background-color: #f4f4f4;
+    background-color: white;
+    border-radius: 10px;
     padding: 15px;
-    border-radius: 8px;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
     text-align: center;
 }
 
-.item-card h2 {
-    margin: 0 0 10px;
-    font-size: 1.25rem;
-    color: #333;
+.item-card img {
+    max-width: 100%;
+    height: 200px;
+    object-fit: cover;
+    border-radius: 8px;
+}
+
+.item-card h3 {
+    font-size: 1.5rem;
+    margin: 10px 0;
 }
 
 .item-card p {
-    margin: 5px 0;
+    font-size: 1rem;
     color: #666;
+    margin: 5px 0;
 }
 
-.item-card .details-link {
-    display: inline-block;
-    margin-top: 10px;
-    padding: 8px 12px;
-    background-color: #f4a261;
-    color: #fff;
+.details-btn {
+    background-color: #007BFF;
+    color: white;
+    padding: 10px 20px;
     text-decoration: none;
-    border-radius: 4px;
-    font-size: 0.9rem;
+    border-radius: 5px;
+    display: inline-block;
+    transition: background-color 0.3s ease;
 }
 
-.item-card .details-link:hover {
-    background-color: #e76f51;
+.details-btn:hover {
+    background-color: #0056b3;
+}
+
+/* Footer */
+footer {
+    text-align: center;
+    background-color: #333;
+    color: white;
+    padding: 20px;
+    margin-top: 20px;
+}
+
+/* Items Grid */
+.items-container {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 2rem;
+    padding: 2rem;
+}
+
+/* Für kleinere Bildschirme */
+@media (max-width: 768px) {
+    .items-container {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (max-width: 480px) {
+    .items-container {
+        grid-template-columns: 1fr;
+    }
 }
