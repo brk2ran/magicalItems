@@ -4,13 +4,15 @@ const pool = require('../config/database'); // Importiere die Datenbankverbindun
 const { body, validationResult } = require('express-validator');
 
 // Alle Kategorien abrufen
-router.get('/', async (req, res) => {
+router.get('/:categoryId', async (req, res) => {
+    const { categoryId } = req.params;
+
     try {
-        const result = await pool.query('SELECT * FROM categories');
-        res.json(result.rows);
-    } catch (err) {
-        console.error(err.message);
-        res.status(500).send('Serverfehler');
+        const items = await db.query('SELECT * FROM items WHERE category_id = $1', [categoryId]);
+        res.json(items.rows);
+    } catch (error) {
+        console.error(`Fehler beim Abrufen der Kategorie ${categoryId}:`, error);
+        res.status(500).send('Interner Serverfehler');
     }
 });
 

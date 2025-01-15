@@ -1,0 +1,309 @@
+/* --- Globale Einstellungen --- */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+h1, h2, h3, h4, h5, h6 {
+    text-align: center;
+}
+
+body {
+    font-family: 'Cinzel Decorative', serif;
+    font-size: 16px;
+    line-height: 1.6;
+    background-color: #f9f9f9;
+    color: #333;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+/* --- Layout für Header und Footer --- */
+header {
+    background-color: #333;
+    color: white;
+    padding: 1rem 2rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+header .logo h1 {
+    font-size: 24px;
+    margin: 0;
+}
+
+header nav ul {
+    list-style: none;
+    display: flex;
+    gap: 20px;
+}
+
+header nav ul li a {
+    text-decoration: none;
+    color: white;
+    font-weight: bold;
+    transition: color 0.3s;
+}
+
+header nav ul li a:hover,
+header nav ul li a.active {
+    color: #f4c542;
+}
+
+footer {
+    background-color: #333;
+    color: white;
+    text-align: center;
+    padding: 10px;
+    font-size: 14px;
+    margin-top: auto;
+}
+
+/* --- Hauptbereich --- */
+main {
+    padding: 20px;
+    flex: 1;
+}
+
+h2 {
+    margin-bottom: 20px;
+    text-align: center;
+    font-size: 28px;
+}
+
+/* --- Grid-Layout für Items --- */
+.items-list {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 2rem;
+    margin-top: 2rem;
+}
+
+/* --- Karten für Items --- */
+.item-card {
+    background-color: white;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    padding: 1rem;
+    text-align: center;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease;
+}
+
+.item-card:hover {
+    transform: translateY(-5px);
+}
+
+.item-card img {
+    max-width: 100%;
+    height: auto;
+    border-radius: 8px;
+    margin-bottom: 1rem;
+    object-fit: cover;
+}
+
+.item-card h3 {
+    font-size: 1.4rem;
+    margin-bottom: 0.5rem;
+    text-align: center;
+}
+
+.item-card p {
+    margin-bottom: 0.5rem;
+    color: #666;
+}
+
+.details-btn {
+    display: inline-block;
+    margin-top: 1rem;
+    padding: 0.5rem 1rem;
+    background-color: #4a4a4a;
+    color: white;
+    text-decoration: none;
+    border-radius: 5px;
+    transition: background-color 0.3s ease;
+}
+
+.details-btn:hover {
+    background-color: #333;
+}
+
+/* --- Detailseite --- */
+.detail-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+    text-align: center;
+    padding: 20px;
+    margin-top: 2rem;
+}
+
+.detail-container .item-card {
+    background-color: white;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    padding: 1rem;
+    text-align: center;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    max-width: 300px; /* Einheitliche Breite */
+}
+
+.detail-container .item-card img {
+    max-width: 100%;
+    height: auto;
+    border-radius: 8px;
+    margin-bottom: 1rem;
+    object-fit: cover;
+}
+
+.detail-container .item-card h3 {
+    font-size: 1.4rem;
+    margin-bottom: 0.5rem;
+    text-align: center;
+}
+
+.detail-container .item-card p {
+    margin-bottom: 0.5rem;
+    color: #666;
+}
+
+/* Zurück-Button */
+.back-button {
+    margin-top: 20px;
+    text-align: center;
+}
+
+.back-button a {
+    display: inline-block;
+    padding: 10px 20px;
+    font-size: 1rem;
+    font-weight: bold;
+    color: #fff;
+    background-color: #333;
+    text-decoration: none;
+    border-radius: 5px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+    transition: background-color 0.3s;
+}
+
+.back-button a:hover {
+    background-color: #555;
+}
+
+
+
+/* Kontaktformular */
+form {
+    max-width: 600px;
+    margin: 2rem auto;
+    padding: 1rem;
+    background-color: #f9f9f9;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.form-group {
+    margin-bottom: 1rem;
+}
+
+label {
+    display: block;
+    margin-bottom: 0.5rem;
+    font-weight: bold;
+}
+
+input,
+textarea {
+    width: 100%;
+    padding: 0.5rem;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 1rem;
+    box-sizing: border-box;
+}
+
+textarea {
+    resize: vertical; /* Benutzer kann die Höhe des Textfeldes ändern */
+}
+
+button {
+    display: block;
+    width: 100%;
+    padding: 0.7rem;
+    background-color: #4a4a4a;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    font-size: 1.1rem;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+button:hover {
+    background-color: #333;
+}
+
+#map {
+    height: 400px;
+    width: 100%;
+    margin: 1rem 0;
+    border: 1px solid #ccc; /* Optional: Rahmen */
+    border-radius: 5px; /* Runde Ecken */
+}
+
+
+
+/* Impressum-Seite */
+.impressum-content {
+    max-width: 800px;
+    margin: 2rem auto;
+    padding: 1rem;
+    background-color: #f9f9f9;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    font-size: 1rem;
+    line-height: 1.6;
+}
+
+.impressum-content p {
+    margin-bottom: 1rem;
+    color: #333;
+}
+
+.impressum-content strong {
+    font-weight: bold;
+    color: #000;
+}
+
+.search-bar {
+    display: flex;
+    gap: 10px;
+    margin-top: 10px;
+}
+
+.search-bar input {
+    padding: 8px;
+    font-size: 14px;
+    width: 200px;
+}
+
+.search-bar button {
+    padding: 8px 10px;
+    font-size: 14px;
+    background-color: #333;
+    color: #fff;
+    border: none;
+    cursor: pointer;
+    border-radius: 4px;
+    transition: background-color 0.3s;
+}
+
+.search-bar button:hover {
+    background-color: #555;
+}

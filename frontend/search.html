@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Suchergebnisse</title>
+    <link rel="stylesheet" href="/frontend/assets/css/styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@400;700&display=swap" rel="stylesheet">
+
+</head>
+<body>
+    <div id="header"></div>
+    <main>
+        <h2>Suchergebnisse</h2>
+        <div id="filter-menu">
+            <label for="price_min">Preis von:</label>
+            <input type="number" id="price_min" name="price_min">
+            <label for="price_max">Preis bis:</label>
+            <input type="number" id="price_max" name="price_max">
+            <button id="filter-btn">Filtern</button>
+        </div>
+        <div id="items-container" class="items-list"></div>
+    </main>
+    <div id="footer"></div>
+    <script type="module" src="/frontend/js/app.js"></script>
+    <script>
+        document.getElementById('filter-btn').addEventListener('click', () => {
+            const query = new URLSearchParams(window.location.search).get('query');
+            const priceMin = document.getElementById('price_min').value;
+            const priceMax = document.getElementById('price_max').value;
+            window.location.href = `/frontend/search.html?query=${encodeURIComponent(query)}&price_min=${priceMin}&price_max=${priceMax}`;
+        });
+    </script>
+</body>
+</html>

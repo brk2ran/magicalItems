@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Magische Items</title>
+    <link rel="stylesheet" href="/frontend/assets/css/styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@400;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <!-- Dynamischer Header -->
+    <div id="header"></div>
+
+    <!-- Hauptinhalt -->
+    <main>
+        <h2>Unsere magischen Items</h2>
+
+        <!-- Items Liste -->
+        <div class="items-list"></div>
+    </main>
+
+    <!-- Dynamischer Footer -->
+    <div id="footer"></div>
+    
+    <!-- Skripte -->
+    <script type="module" src="/frontend/js/app.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            // Dynamische Item-Generierung
+            loadItems();
+        });
+
+        async function loadItems() {
+            const itemsContainer = document.querySelector('.items-list');
+            if (itemsContainer) {
+                try {
+                    // API-Aufruf für alle Items
+                    const response = await fetch('http://localhost:3000/api/items');
+                    const items = await response.json();
+
+                    // Item-Karten generieren
+                    itemsContainer.innerHTML = '';
+                    items.forEach((item) => {
+                        const cardHTML = `
+                            <div class="item-card">
+                                <img src="${item.image || '/assets/images/default-item.png'}" alt="${item.name}">
+                                <h3>${item.name}</h3>
+                                <p>Preis: ${item.price} Gold</p>
+                                <p>Mana: ${item.mana}</p>
+                                <a href="/frontend/categories/detail.html?id=${item.id}" class="details-btn">Details ansehen</a>
+                            </div>
+                        `;
+                        itemsContainer.innerHTML += cardHTML;
+                    });
+                } catch (err) {
+                    console.error('Fehler beim Laden der Items:', err);
+                }
+            }
+        }
+    </script>
+</body>
+</html>
