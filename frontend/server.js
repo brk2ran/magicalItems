@@ -20,6 +20,7 @@ app.get('/impressum.html', (req, res) => {
   res.sendFile(path.join(__dirname, 'frontend', 'impressum.html'));
 });
 
+
 // API-Endpunkte (falls vorhanden)
 app.get('/api/items', (req, res) => {
   // Beispiel-API-Response

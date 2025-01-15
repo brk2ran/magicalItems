@@ -25,39 +25,5 @@
 
   <!-- Skripte -->
   <script type="module" src="/frontend/js/app.js"></script>
-  <script>
-      document.addEventListener('DOMContentLoaded', () => {
-          // Dynamische Item-Generierung
-          loadItems();
-      });
-
-      async function loadItems() {
-          const itemsContainer = document.querySelector('.items-list');
-          if (itemsContainer) {
-              try {
-                  // API-Aufruf für alle Items
-                  const response = await fetch('http://localhost:3000/api/items');
-                  const items = await response.json();
-
-                  // Item-Karten generieren
-                  itemsContainer.innerHTML = '';
-                  items.forEach((item) => {
-                      const cardHTML = `
-                          <div class="item-card">
-                              <img src="${item.image || '/frontend/assets/images/default-item.png'}" alt="${item.name}">
-                              <h3>${item.name}</h3>
-                              <p>Preis: ${item.price} Gold</p>
-                              <p>Mana: ${item.mana}</p>
-                              <a href="/frontend/detail.html?id=${item.id}" class="details-btn">Details ansehen</a>
-                          </div>
-                      `;
-                      itemsContainer.innerHTML += cardHTML;
-                  });
-              } catch (err) {
-                  console.error('Fehler beim Laden der Items:', err);
-              }
-          }
-      }
-  </script>
-</body>
+  </body>
 </html>

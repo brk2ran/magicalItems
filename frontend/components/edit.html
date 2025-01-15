@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Neues Item hinzufügen</title>
+    <link rel="stylesheet" href="/frontend/assets/css/styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@400;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div id="header"></div>
+
+    <main>
+        <h2>Neues Item hinzufügen</h2>
+        <form id="item-form" enctype="multipart/form-data">
+            <div class="form-group">
+                <label for="name">Name:</label>
+                <input type="text" id="name" name="name" required>
+            </div>
+            <div class="form-group">
+                <label for="price">Preis:</label>
+                <input type="number" id="price" name="price" required>
+            </div>
+            <div class="form-group">
+                <label for="mana">Mana:</label>
+                <input type="number" id="mana" name="mana" required>
+            </div>
+            <div class="form-group">
+                <label for="category">Kategorie:</label>
+                <select id="category" name="category" required>
+                    <option value="1">Waffen</option>
+                    <option value="2">Tränke</option>
+                    <option value="3">Rüstungen</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="image">Bild:</label>
+                <input type="file" id="image" name="image" accept="image/*" required>
+            </div>
+            <button type="submit">Item hinzufügen</button>
+        </form>
+    </main>
+
+    <div id="footer"></div>
+
+    <script src="/frontend/js/edit.js" defer></script>
+    <script type="module" src="/frontend/js/app.js"></script>
+</body>
+</html>

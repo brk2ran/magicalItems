@@ -25,3 +25,38 @@ document.addEventListener('DOMContentLoaded', () => {
     loadPotions();
     loadComponent();
 });
+
+document.addEventListener("DOMContentLoaded", async () => {
+    await loadComponent(); // Lädt Header und Footer
+
+    // Logik für den "Neues Item"-Button
+    const addItemBtn = document.createElement('button');
+    addItemBtn.id = 'add-item-btn';
+    addItemBtn.textContent = '+ Neues Item';
+    addItemBtn.style.marginLeft = '1rem';
+    addItemBtn.style.padding = '0.5rem 1rem';
+    addItemBtn.style.backgroundColor = '#4a4a4a';
+    addItemBtn.style.color = '#fff';
+    addItemBtn.style.border = 'none';
+    addItemBtn.style.borderRadius = '5px';
+    addItemBtn.style.fontSize = '1rem';
+    addItemBtn.style.cursor = 'pointer';
+    addItemBtn.style.transition = 'background-color 0.3s ease';
+
+    addItemBtn.addEventListener('mouseover', () => {
+        addItemBtn.style.backgroundColor = '#333';
+    });
+
+    addItemBtn.addEventListener('mouseout', () => {
+        addItemBtn.style.backgroundColor = '#4a4a4a';
+    });
+
+    addItemBtn.addEventListener('click', () => {
+        window.location.href = '/frontend/components/edit.html';
+    });
+
+    const searchBar = document.querySelector('.search-bar');
+    if (searchBar) {
+        searchBar.appendChild(addItemBtn);
+    }
+});
